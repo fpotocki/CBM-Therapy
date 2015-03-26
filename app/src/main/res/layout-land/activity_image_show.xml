@@ -1,0 +1,59 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="tvz.ffteam.myshrink.ImageShowActivity">
+
+
+    <ImageView
+        android:layout_width="320dip"
+        android:layout_height="320dip"
+        android:id="@+id/leftImage"
+        android:background="#ff91ff4f"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="121dp"
+        android:layout_marginStart="121dp" />
+
+    <ImageView
+        android:layout_width="320dip"
+        android:layout_height="320dip"
+        android:id="@+id/rightImage"
+        android:background="#ffff40de"
+        android:layout_alignTop="@+id/finalImage"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="196dp"
+        android:layout_marginEnd="196dp" />
+
+    <ImageView
+        android:layout_width="320dip"
+        android:layout_height="320dip"
+        android:id="@+id/finalImage"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:background="#ff5651ff" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Ovdje ide tekst 2"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/rightImage"
+        android:layout_toRightOf="@+id/finalImage"
+        android:layout_toEndOf="@+id/finalImage" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Ovdje ide tekst 1"
+        android:id="@+id/textView"
+        android:layout_below="@+id/leftImage"
+        android:layout_alignLeft="@+id/leftImage"
+        android:layout_alignStart="@+id/leftImage" />
+
+
+</RelativeLayout>
