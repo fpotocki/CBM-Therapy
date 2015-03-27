@@ -1,15 +1,18 @@
 package tvz.ffteam.myshrink;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,33 +21,23 @@ public class MainActivity extends ActionBarActivity {
         ConnectionDetector connection = new ConnectionDetector(getApplicationContext());
         Toast.makeText(getApplicationContext(), "Internet is: " + connection.isConnectingToInternet() + ".", Toast.LENGTH_LONG).show();
 
-   //Privremeno, SAMO ZA TESTIRANJE
-            Intent intent = new Intent(this, ImageShowActivity.class);
-            startActivity(intent);
+   //Privremeno, SAMO ZA TESTIRANJE. Inače ide timer
+       final Intent intent = new Intent(this, ImageShowActivity.class);
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+
+                        startActivity(intent);
+                    }
+                },
+                2000
+        );
+
 
 
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }
