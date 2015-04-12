@@ -21,7 +21,7 @@ public class MainActivity extends Activity {
         ConnectionDetector connection = new ConnectionDetector(getApplicationContext());
         Toast.makeText(getApplicationContext(), "Internet is: " + connection.isConnectingToInternet() + ".", Toast.LENGTH_LONG).show();
 
-   //Privremeno, SAMO ZA TESTIRANJE. Inače ide timer
+   //Timer za sljedeći screen, tj. activity
        final Intent intent = new Intent(this, ImageShowActivity.class);
         new java.util.Timer().schedule(
                 new java.util.TimerTask() {

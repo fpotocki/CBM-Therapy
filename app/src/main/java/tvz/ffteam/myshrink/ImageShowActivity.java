@@ -1,17 +1,18 @@
 package tvz.ffteam.myshrink;
 
 import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
+import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 
 public class ImageShowActivity extends Activity {
@@ -30,6 +31,29 @@ public class ImageShowActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_show);
+
+        //DATABASE TESTING
+        Context mContext=getApplicationContext();
+       DatabaseHelper mDbHelper = new DatabaseHelper(mContext);
+        ArrayList<String> text= new ArrayList<>();
+        Cursor c =mDbHelper.getPositiveText();
+        String textIzBaze =c.getString(c.getColumnIndex("Text"));
+        text.add(textIzBaze);
+    c.close();
+        Log.e("ČITANO IZ BAZE","->"+text.get(0));
+
+     /*   DatabaseHelper.C_DatabaseHelper helper =mDbHelper.new C_DatabaseHelper(mContext);
+        try {
+            helper.openDataBase();
+            Toast.makeText(getApplicationContext(), "Database is: " + databaseList().toString() + ".", Toast.LENGTH_LONG).show();
+        } catch (SQLException e) {
+            Toast.makeText(getApplicationContext(), "BAZA EXCEPTION " + "SRANJE S BAZOM", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }*/
+
+        //
+
+
 
         //Layout elements definition
        leftImageView = (ImageView)findViewById(R.id.leftImage);
