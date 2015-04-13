@@ -55,51 +55,41 @@ public class DatabaseHelper extends SQLiteAssetHelper  {
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null,DATABASE_VERSION );
     }
-
+    SQLiteDatabase db = getReadableDatabase();
+    SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
     public Cursor getPositiveText() {
-        Log.d(TAG,"Metoda za dohvaćanje iz Baze");
-        SQLiteDatabase db = getReadableDatabase();
-        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
-        Log.d(TAG,"Čitanje iz tablice Text");
+
+        Log.d(TAG,"Čitanje iz tablice Text - positive text");
         qb.setTables("Text");
-        String [] sqlSelect = {"Text"};
-        Cursor c = qb.query(db, sqlSelect, null, null, null, null, null);
+        String sql = "SELECT Text FROM Text WHERE TypeID = '1';";
+        Cursor c = db.rawQuery(sql,null);
         c.moveToFirst();
         return c;
     }
 
     public Cursor getNegativeText() {
-        Log.d(TAG,"Metoda za dohvaćanje iz Baze");
-        SQLiteDatabase db = getReadableDatabase();
-        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
-        Log.d(TAG,"Čitanje iz tablice Text");
+        Log.d(TAG,"Čitanje iz tablice Text - negative text");
         qb.setTables("Text");
-        String [] sqlSelect = {"Text"};
-        Cursor c = qb.query(db, sqlSelect, null, null, null, null, null);
+        String sql = "SELECT Text FROM Text WHERE TypeID = '2';";
+        Cursor c = db.rawQuery(sql,null);
         c.moveToFirst();
         return c;
     }
 
     public Cursor getPositiveImages() {
-        Log.d(TAG,"Metoda za dohvaćanje iz Baze");
-        SQLiteDatabase db = getReadableDatabase();
-        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
-        Log.d(TAG,"Čitanje iz tablice Text");
-        qb.setTables("Text");
-        String [] sqlSelect = {"Text"};
-        Cursor c = qb.query(db, sqlSelect, null, null, null, null, null);
+        Log.d(TAG,"Čitanje iz tablice Images");
+        qb.setTables("Images");
+        String sql = "SELECT Path FROM Images WHERE TypeID = '1';";
+        Cursor c = db.rawQuery(sql,null);
         c.moveToFirst();
         return c;
     }
 
     public Cursor getNegativeImages() {
-        Log.d(TAG,"Metoda za dohvaćanje iz Baze");
-        SQLiteDatabase db = getReadableDatabase();
-        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
-        Log.d(TAG,"Čitanje iz tablice Text");
-        qb.setTables("Text");
-        String [] sqlSelect = {"Text"};
-        Cursor c = qb.query(db, sqlSelect, null, null, null, null, null);
+        Log.d(TAG,"Čitanje iz tablice Images");
+        qb.setTables("Images");
+        String sql = "SELECT Path FROM Images WHERE TypeID = '2';";
+        Cursor c = db.rawQuery(sql,null);;
         c.moveToFirst();
         return c;
     }

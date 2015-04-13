@@ -16,6 +16,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.NoTitleBar"
+        android:configChanges="keyboardHidden|orientation|screenSize"
         >
         <activity
             android:name=".MainActivity"
@@ -33,7 +34,8 @@
         </activity>
         <activity
             android:name=".ImageShowActivity"
-            android:label="@string/title_activity_image_show" >
+            android:label="@string/title_activity_image_show"
+            android:screenOrientation="landscape">
         </activity>
     </application>
 

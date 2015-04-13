@@ -19,7 +19,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ConnectionDetector connection = new ConnectionDetector(getApplicationContext());
-        Toast.makeText(getApplicationContext(), "Internet is: " + connection.isConnectingToInternet() + ".", Toast.LENGTH_LONG).show();
+      //  Toast.makeText(getApplicationContext(), "Internet is: " + connection.isConnectingToInternet() + ".", Toast.LENGTH_LONG).show();
 
    //Timer za sljedeći screen, tj. activity
        final Intent intent = new Intent(this, ImageShowActivity.class);
