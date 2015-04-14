@@ -24,6 +24,8 @@ import java.util.Timer;
 
 
 public class ImageShowActivity extends Activity {
+    private String positiveText;
+
     //Elements declaration
     ImageView leftImageView=null;
     ImageView rightImageView=null;
@@ -53,6 +55,8 @@ public class ImageShowActivity extends Activity {
         //DATABASE TESTING
         Context mContext = getApplicationContext();
         DatabaseHelper mDbHelper = new DatabaseHelper(mContext);
+
+        final StringComparator stringComparator= new StringComparator();
 
         Cursor c = mDbHelper.getPositiveText();
         if (c.moveToFirst()) {
@@ -123,6 +127,7 @@ public class ImageShowActivity extends Activity {
             @Override
             public void onClick(View view) {
                 String inptxt = userInputText.getText().toString();
+                Log.d("KOMPARACIJA STRINGOVA","REZZ JE: "+stringComparator.compare(inptxt,positiveText));
                 if (inptxt.matches("")) {
                     Toast.makeText(ImageShowActivity.this, "You did not enter anything", Toast.LENGTH_SHORT).show();
                     return;
@@ -272,12 +277,14 @@ private void choosePositiveOrNegativeSide(){
 
     private void setPositiveElements(ArrayList<View> elementList) {
         int rnd = new Random().nextInt(2)+1;
+        positiveText =null;
         Collections.shuffle(PositiveImagesPath);
         Collections.shuffle(PositiveTextArray);
         setBackgroundImage(PositiveImagesPath,elementList,rnd);
         Log.d("TextView", "Postavlja pozitivni text");
         TextView tmp = (TextView)elementList.get(1);
         tmp.setText(PositiveTextArray.get(new Random().nextInt(2)+1));
+        positiveText=tmp.getText().toString();
     }
 
     private void setNegativeElements(ArrayList<View> elementList) {
