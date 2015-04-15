@@ -3,7 +3,6 @@ package tvz.ffteam.myshrink;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.util.Log;
 import android.widget.Toast;
@@ -14,9 +13,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.security.Timestamp;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static android.util.Log.e;
 
@@ -92,6 +94,15 @@ public class DatabaseHelper extends SQLiteAssetHelper  {
         Cursor c = db.rawQuery(sql,null);;
         c.moveToFirst();
         return c;
+    }
+    public void setScoreInDatabase(float score) {
+        Log.d(TAG,"Zapisivanje rezultata u bazu");
+        qb.setTables("Score");
+        SimpleDateFormat dateFormat =new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        Date myDate = new Date();
+        String sql = "INSERT INTO Score (ID,Date,Score) VALUES (1,'"+dateFormat.format(myDate)+"',"+score+");";
+        db.execSQL(sql);
+        Log.d(TAG,"Rezultati zapisani u bazu!");
     }
 
         @Override

@@ -2,8 +2,10 @@ package tvz.ffteam.myshrink;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 
@@ -46,15 +49,20 @@ public class ImageShowActivity extends Activity {
     ArrayList<String> NegativeTextArray = new ArrayList<>();
     ArrayList<String> PositiveImagesPath = new ArrayList<>();
     ArrayList<String> NegativeImagesPath = new ArrayList<>();
+    ArrayList<Boolean> results= new ArrayList<>();
 
+    //Od tuda dobiva broj ponavljanja
+    RepetitionScoreHelper repetitionScoreHelper = new RepetitionScoreHelper();
+    int repetitions=repetitionScoreHelper.getNUMBER_OF_REPETITION();
+    int current_repetition=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_show);
-
+        final View activityView = this.getWindow().getDecorView();
         //DATABASE TESTING
         Context mContext = getApplicationContext();
-        DatabaseHelper mDbHelper = new DatabaseHelper(mContext);
+        final DatabaseHelper mDbHelper = new DatabaseHelper(mContext);
 
         final StringComparator stringComparator= new StringComparator();
 
@@ -127,21 +135,40 @@ public class ImageShowActivity extends Activity {
             @Override
             public void onClick(View view) {
                 String inptxt = userInputText.getText().toString();
-                Log.d("KOMPARACIJA STRINGOVA","REZZ JE: "+stringComparator.compare(inptxt,positiveText));
                 if (inptxt.matches("")) {
                     Toast.makeText(ImageShowActivity.this, "You did not enter anything", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 else {
-                    TimerAcivation(5000);
+                    //GOTOVO SVE, POKREĆE SE SPREMANJE I GAŠENJE APLIAKCIJE
+                    current_repetition++;
+                    Log.d("KOMPARACIJA STRINGOVA","REZZ JE: "+stringComparator.compare(inptxt,positiveText));
+                    results.add(stringComparator.compare(inptxt, positiveText));
+                    //Za tipkovnicu
                     InputMethodManager inputManager =
                             (InputMethodManager) getApplicationContext().
                                     getSystemService(Context.INPUT_METHOD_SERVICE);
-                    inputManager.hideSoftInputFromWindow(userInputText.getWindowToken(), 0);
-                    userInputText.setText("");
-                    choosePositiveOrNegativeSide();
-                    changeVisibility();
+                    if (current_repetition==repetitions)
+                    {
+                        finalImageView.setVisibility(View.INVISIBLE);
+                        submitBtn.setVisibility(View.INVISIBLE);
+                        userInputText.setVisibility(View.INVISIBLE);
+                        inputManager.hideSoftInputFromWindow(userInputText.getWindowToken(), 0);
+                        activityView.setBackgroundColor(Color.BLUE);
+                        Toast.makeText(ImageShowActivity.this, "Gotovi ste s testovima", Toast.LENGTH_LONG).show();
+                        Log.d("TESTOVI GOTOVI","");
+                        mDbHelper.setScoreInDatabase(repetitionScoreHelper.getScore(results));
+                       // ImageShowActivity.this.finish();
+                       // System.exit(0);
 
+                    }
+                    else {
+                        TimerAcivation(5000);
+                        inputManager.hideSoftInputFromWindow(userInputText.getWindowToken(), 0);
+                        userInputText.setText("");
+                        choosePositiveOrNegativeSide();
+                        changeVisibility();
+                    }
                 }
             }
         });}
@@ -166,8 +193,6 @@ public class ImageShowActivity extends Activity {
 
     }
 
-
-
     private void TimerMethod()
     {
         //This method is called directly by the timer
@@ -184,16 +209,6 @@ public class ImageShowActivity extends Activity {
             Log.d("TIMER", "Mijenja se visibility");
             changeVisibility();
             //This method runs in the same thread as the UI.
-
-            //Do something to the UI thread here
-          /*  leftImageView.setVisibility(View.INVISIBLE);
-            rightImageView.setVisibility(View.INVISIBLE);
-            leftImageText.setVisibility(View.INVISIBLE);
-            rightImageText.setVisibility(View.INVISIBLE);
-            finalImageView.setVisibility(View.VISIBLE);
-            userInputText.setVisibility(View.VISIBLE);
-            submitBtn.setVisibility(View.VISIBLE);*/
-
         }
     };
 
