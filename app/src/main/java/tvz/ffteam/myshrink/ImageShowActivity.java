@@ -130,7 +130,7 @@ public class ImageShowActivity extends Activity {
 
         submitBtn = (Button) findViewById(R.id.submitButton);
         choosePositiveOrNegativeSide();
-        TimerAcivation(5000);
+        TimerAcivation(1000);
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -163,7 +163,7 @@ public class ImageShowActivity extends Activity {
 
                     }
                     else {
-                        TimerAcivation(5000);
+                        TimerAcivation(1000);
                         inputManager.hideSoftInputFromWindow(userInputText.getWindowToken(), 0);
                         userInputText.setText("");
                         choosePositiveOrNegativeSide();
